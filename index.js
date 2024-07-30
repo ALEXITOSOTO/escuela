@@ -8,6 +8,7 @@ const Curso = require('./app/models/Curso');
 const Docente = require('./app/models/Docente');
 const Materia = require('./app/models/Materia');
 const Estudiante = require('./app/models/Estudiante');
+const Autoridad = require('./app/models/Autoridad');
 
 // Configuración de Knex
 const knexConfig = require('./knexfile');
@@ -107,6 +108,31 @@ app.post('/api/estudiantes', async (req, res) => {
     } catch (error) {
         console.error('Error adding estudiante:', error.message);
         res.status(500).json({ error: 'Error adding estudiante' });
+    }
+});
+
+// Ruta para obtener todas las autoridades
+app.get('/api/autoridades', async (req, res) => {
+    try {
+        // Obtener todas las autoridades de la base de datos
+        const autoridades = await Autoridad.getAutoridades();
+        res.json(autoridades);
+    } catch (error) {
+        console.error('Error fetching autoridades:', error.message);
+        res.status(500).json({ error: 'Error fetching autoridades' });
+    }
+});
+
+// Ruta para agregar una nueva autoridad
+app.post('/api/autoridades', async (req, res) => {
+    try {
+        const { cedula, nombre, apellido, correo, titulo, cargo } = req.body;
+        // Insertar la nueva autoridad en la base de datos
+        const [id] = await Autoridad.insert({ cedula, nombre, apellido, correo, titulo, cargo });
+        res.status(201).json({ id, cedula, nombre, apellido, correo, titulo, cargo });
+    } catch (error) {
+        console.error('Error adding autoridad:', error.message);
+        res.status(500).json({ error: 'Error adding autoridad' });
     }
 });
 

@@ -25,15 +25,15 @@ class Autoridad extends Model { // Creo herencia de Model
         return await Autoridad.query(); // SELECT * FROM autoridad
     }
 
-    static async createAutoridad(data) { // Método para insertar una autoridad
+    static async insert(data) { // Método para insertar una autoridad
         return await Autoridad.query().insert(data); // INSERT INTO autoridad VALUES (...)
     }
 
-    static async updateAutoridad(id, data) { // Método para editar una autoridad
+    static async update(id, data) { // Método para editar una autoridad
         return await Autoridad.query().patch(data).where('id', id); // UPDATE autoridad SET data WHERE id = ?
     }
 
-    static async deleteAutoridad(id) { // Método para eliminar una autoridad
+    static async delete(id) { // Método para eliminar una autoridad
         return await Autoridad.query().deleteById(id); // DELETE FROM autoridad WHERE id = ?
     }
 }
